@@ -1,0 +1,3 @@
+0 khong khau trang
+1 co khau trang
+2 khong co ai
