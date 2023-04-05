@@ -11,8 +11,8 @@ from hinhanh import get_hinhanh
 AIO_FEED_ID_BTN = ["btn1","btn2"]
 AIO_FEED_ID_CB = ["cb1","cb2"]
 Time_Feed=[5,10]
-AIO_USERNAME = "nguyenvudev20"
-AIO_KEY = "aio_dYmO98M7idPGg8fQOCxGP8OULJNs"
+AIO_USERNAME = ""
+AIO_KEY = ""
 btnNhietDo=0
 btnDoAm=0
 
