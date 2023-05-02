@@ -4,15 +4,21 @@ import time
 from ket_noi_serial import readSerial
 from ket_noi_serial import writeData
 import random
-# from simple_ai import nhandien
-from hinhanh import get_hinhanh
+from simple_ai import nhandien
+from simple_ai import get_hinhanh
 
 
-AIO_FEED_ID_BTN = ["btn1","btn2"]
+#AIO_FEED_ID_BTN = ["button1","button2","dimmer"]
+#AIO_FEED_ID_CB = ["sensor1","sensor3"]
+
+AIO_FEED_ID_BTN = ["btn1","btn2","dimmer"]
 AIO_FEED_ID_CB = ["cb1","cb2"]
+
 Time_Feed=[5,10]
 AIO_USERNAME = "nguyenvudev20"
-AIO_KEY = "aio_dYmO98M7idPGg8fQOCxGP8OULJNs"
+AIO_KEY = "aio_rJIO50gUo9p1M8fMlkuaxKW3wDd3"
+#AIO_USERNAME = "quang_nguyen_van"
+#AIO_KEY = "aio_lSPx27xMNOVbk7DmVLxyooklkPQO"
 btnNhietDo=0
 btnDoAm=0
 
@@ -29,11 +35,32 @@ def disconnected(client):
     sys.exit(1)
 
 def message(client , feed_id , payload):
-    print("Nhan du lieu : " +feed_id +" val="+payload)
+    #print("Nhan du lieu : " +feed_id +" val="+payload)
     if feed_id == 'btn1':
-        writeData(str(payload))
+        if payload=="0":
+            writeData("1")
+        elif payload=="1":
+            writeData("2")
     elif feed_id == 'btn2':
-        writeData(str(payload))
+        if payload == "0":
+            writeData("3")
+        elif payload == "1":
+            writeData("4")
+    elif feed_id == 'dimmer':
+        writeData("DM:"+str(payload))
+
+    # if feed_id == 'button1':
+    #     if payload == "0":
+    #         writeData("1")
+    #     elif payload == "1":
+    #         writeData("2")
+    # elif feed_id == 'button2':
+    #     if payload == "0":
+    #         writeData("3")
+    #     elif payload == "1":
+    #         writeData("4")
+    # elif feed_id == 'dimmer':
+    #     writeData("DM:" + str(payload))
 
 client = MQTTClient(AIO_USERNAME , AIO_KEY)
 client.on_connect = connected
@@ -45,10 +72,13 @@ client.loop_background()
 
 
 
+
 dem=0
 cambien=0
-
+dem_nhan_dien=0
+time_renew=60
 while True:
+
     #print(str(btnDoAm) + '  ' + str(btnNhietDo))
     #if dem==Time_Feed[cambien]:
     #    rd=random.randint(10,100)
@@ -62,11 +92,25 @@ while True:
     #    dem=0
     #dem=dem+1
     # if dem ==5:
-    #     #kqnhandien=nhandien()
-    #     hinh=get_hinhanh()
-    #     client.publish('hinhanh', hinh)
-    #     #print(kqnhandien)
-    #     dem=0
-    # dem=dem+1
+    if time_renew >=60:
+        kq =nhandien()
+        if(kq==1):
+            dem_nhan_dien = dem_nhan_dien + 1
+        else:
+            dem_nhan_dien=0
+    elif time_renew<=0:
+        time_renew=60
+    else:
+        time_renew=time_renew-1
+
+    if dem_nhan_dien>=10:
+        writeData("NN:1")
+        dem_nhan_dien=0
+        hinh=get_hinhanh()
+        client.publish('hinhanh', hinh)
+        #print(hinh)
+        time_renew=59
+
+    print("đếm không khẩu trang: ",dem_nhan_dien," time_renew: ",time_renew)
     readSerial(client)
     time.sleep(1)
