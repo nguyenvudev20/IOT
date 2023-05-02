@@ -15,10 +15,15 @@ AIO_FEED_ID_BTN = ["btn1","btn2","dimmer"]
 AIO_FEED_ID_CB = ["cb1","cb2"]
 
 Time_Feed=[5,10]
-AIO_USERNAME = "nguyenvudev20"
-AIO_KEY = "aio_rJIO50gUo9p1M8fMlkuaxKW3wDd3"
-#AIO_USERNAME = "quang_nguyen_van"
-#AIO_KEY = "aio_lSPx27xMNOVbk7DmVLxyooklkPQO"
+<<<<<<< HEAD
+AIO_USERNAME = ""
+AIO_KEY = ""
+#AIO_USERNAME = ""
+#AIO_KEY = ""
+=======
+AIO_USERNAME = ""
+AIO_KEY = ""
+>>>>>>> dc57693e945990423ab7d5161cdd6b75706c2de5
 btnNhietDo=0
 btnDoAm=0
 
